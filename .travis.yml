@@ -1,8 +1,4 @@
 language: python
-
-branches:
-    only:
-    - main
 before_script:
     - chmod +x ./cibuild
 script: ./cibuild

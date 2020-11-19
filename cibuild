@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $TRAVIS_PULL_REQUEST == "true" ]; then
+echo "this is PR, exiting" 
+exit 0 
+fi
+
+set -e
+
+echo ${CREDENTIALS} > credentials.json
+echo ${SERVICEACC} > serviceacc.json

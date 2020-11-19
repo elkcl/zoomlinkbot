@@ -35,7 +35,7 @@ result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
 print('Ready!')
 print('Waiting...')
-time.sleep(90)
+time.sleep(300)
 
 while True:
     print('Checking...')
@@ -71,4 +71,4 @@ while True:
                         break
                     
     print('Waiting...')
-    time.sleep(90)
+    time.sleep(300)

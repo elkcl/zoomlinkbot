@@ -5,3 +5,8 @@ before_script:
     - chmod +x ./cibuild
 script: ./cibuild
 sudo: false
+
+deploy:
+    provider: heroku
+    api_key:
+        secure: "WY4e+tD7PocszdAw4SbtlgHwpTBPqPKA+SJtP5cruKwP/TIU9Cj1zIyw1yjFSROgSRVK/NgJ0NqDcYgChTH0tA4ZNePA16zON0pUGrSlQJHmiWzrf/+20/1wC0BISrSxDMtdNm1Je2O9WYG2iUO97t2XsH3IgADKWoQ6tVtCoZ0+yN/SKtftl42F8E/jkJxYIdBJ0tZyFNbYr1PcoE7w7msygqPHf+uWi2anTCT/mJTE+ofvwMNPhfnIG1on+PGseXIAGKer+t4AsvXMvjlDSjlNxaRU7UdnXNO619ra7XcLcmbQzLY7iW7w6Kq7zt9Wu+QAIeCGC2gUcMxFSutiJEPOKnasFej2hhgD3TAoI0tTTjM2Ctqern9MrhQpImZ9i7xNtvfVXnsg6Gsp25AHP/68n3tduRJTRogJAtEvc8H6YcKEj8lQdmKQrfUjsaAAb6+man/VTDwXK0UAwCe2H/FQiljw22cQVyZVMEBtIdMLdYL2W2Q5d7wsByxf2vB22vJh74xgApxglG1q5SjrpZiOqWZlohsZqtTUwm33VkGLDdbar1LMFCbAriUnK7fZblzx1NLbwW7tWUbtPXXyEmTEriBUgJfiLzmz++uZ5jsZ99baLophPvE1lBQplOZPFft4QuCKsgHRX6VKTxyMmqEctPkfIGtKQDL0q5pmcYg="

@@ -67,7 +67,7 @@ while True:
                 for row, addrs in enumerate(wk.get_col(4)):
                     if addrs.find(from_addr) != -1:
                         wk.cell((row+1, 2)).set_value(zoom_link)
-                        wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%y"))
+                        wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%d"))
                         break
                     
     print('Waiting...')

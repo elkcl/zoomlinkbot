@@ -32,10 +32,10 @@ wk = sh[0]
 tz = pytz.timezone('Europe/Moscow')
 
 result, data = mail.uid('search', None, "ALL")
-last_uid = data[0].split()[-1]
+last_uid = data[0].split()[0]
 print('Ready!')
 print('Waiting...')
-time.sleep(300)
+#time.sleep(300)
 
 while True:
     print('Checking...')

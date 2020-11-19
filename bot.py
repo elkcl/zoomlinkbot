@@ -33,14 +33,19 @@ tz = pytz.timezone('Europe/Moscow')
 
 result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
-time.sleep(300)
+print('Ready!')
+print('Waiting...')
+time.sleep(90)
 
 while True:
+    print('Checking...')
     result, data = mail.uid('search', None, "ALL")
     uidList = data[0].split()
     curr_uid = uidList[-1]
     if curr_uid != last_uid:
         start_index = uidList.index(last_uid)
+        if start_index == -1:
+            start_index = len(uidList) - 1
         last_uid = curr_uid
         for i in range(start_index, len(uidList)):
             result, data = mail.uid('fetch', uidList[i], '(RFC822)')
@@ -50,18 +55,20 @@ while True:
             contents = base64.b64decode(get_first_text_block(email_message)).decode('utf-8')
             urls = re.findall(r'(https?://[^\s]+)', contents)
             zoom_link = ""
+            found = False
             for url in urls:
                 ex = tldextract.extract(url)
                 if ex.domain == 'zoom' and ex.suffix == 'us':
                     zoom_link = url
+                    found = True
                     break
-            
-            for addrs in wk.get_col(4):
-                row = addrs.find(from_addr)
-                if row != -1:
-                    wk.cell((row+1, 2)).set_value(zoom_link)
-                    wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%y"))
-                    break
+            if found:
+                print('Found!')
+                for row, addrs in enumerate(wk.get_col(4)):
+                    if addrs.find(from_addr) != -1:
+                        wk.cell((row+1, 2)).set_value(zoom_link)
+                        wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%y"))
+                        break
                     
-    
-    time.sleep(300)
+    print('Waiting...')
+    time.sleep(90)

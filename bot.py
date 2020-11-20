@@ -70,11 +70,11 @@ while True:
                             wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%d"))
                             break
             last_uid = curr_uid
-        except imaplib.IMAP4.abort as e:
-            mail = imaplib.IMAP4_SSL("imap.mail.ru")
-            mail.login(credentials["login"], credentials["password"])
-            mail.select('INBOX')
-            continue
+    except imaplib.IMAP4.abort:
+        mail = imaplib.IMAP4_SSL("imap.mail.ru")
+        mail.login(credentials["login"], credentials["password"])
+        mail.select('INBOX')
+        continue
                     
     print('Waiting...')
     hrs = datetime.now(tz).hour

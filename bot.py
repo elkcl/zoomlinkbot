@@ -10,14 +10,16 @@ import base64
 import re
 import tldextract # external
 
-def get_first_text_block(email_message_instance):
+def get_text(email_message_instance):
+    res = ""
     maintype = email_message_instance.get_content_maintype()
     if maintype == 'multipart':
         for part in email_message_instance.get_payload():
             if part.get_content_maintype() == 'text':
-                return part.get_payload()
+                res += part.get_payload()
     elif maintype == 'text':
-        return email_message_instance.get_payload()
+        res+= email_message_instance.get_payload()
+    return res
 
 with open("credentials.json", "r") as read_file:
     credentials = json.load(read_file)
@@ -52,7 +54,7 @@ while True:
                 raw_email = data[0][1]
                 email_message = email.message_from_bytes(raw_email)
                 from_addr = email.utils.parseaddr(email_message['From'])[1]
-                contents = base64.b64decode(get_first_text_block(email_message)).decode('utf-8')
+                contents = base64.b64decode(get_text(email_message)).decode('utf-8')
                 urls = re.findall(r'(https?://[^\s]+)', contents)
                 zoom_link = ""
                 found = False

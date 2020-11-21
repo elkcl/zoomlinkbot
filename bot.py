@@ -37,7 +37,7 @@ result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
 print('Ready!')
 print('Waiting...')
-time.sleep(300)
+time.sleep(120)
 
 while True:
     print('Checking...')
@@ -79,9 +79,11 @@ while True:
                     
     print('Waiting...')
     hrs = datetime.now(tz).hour
-    if hrs >= 22:
+    if hrs >= 16 and hrs < 22:
+        time.sleep(900)
+    elif hrs >= 22:
         time.sleep((30-hrs)*3600)
     elif hrs <= 5:
         time.sleep((6-hrs)*3600)
     else:
-        time.sleep(300)
+        time.sleep(120)

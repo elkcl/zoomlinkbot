@@ -78,7 +78,7 @@ while True:
         continue
                     
     print('Waiting...')
-    now = datetime.now(tz).hour
+    now = datetime.now(tz)
     hrs = now.hour
     wd = now.weekday()
     if wd == 6:

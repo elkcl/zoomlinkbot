@@ -70,7 +70,6 @@ while True:
                         if addrs.find(from_addr) != -1:
                             wk.cell((row+1, 2)).set_value(zoom_link)
                             wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%d"))
-                            break
             last_uid = curr_uid
     except imaplib.IMAP4.abort:
         mail = imaplib.IMAP4_SSL("imap.mail.ru")

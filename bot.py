@@ -47,13 +47,13 @@ while True:
         uidList = data[0].split()
         curr_uid = uidList[-1]
         if curr_uid != last_uid:
-            start_index = uidList.index(last_uid) + 1
-            if start_index == -1:
-                i = len(uidList) - 1
-                while last_uid < uidList[i]:
-                    i -= 1
-                start_index = i + 1
-            for i in range(start_index, len(uidList)):
+            try:
+                start_index = uidList.index(last_uid)
+            except ValueError:
+                start_index = len(uidList) - 1
+                while last_uid < uidList[start_index]:
+                    start_index -= 1
+            for i in range(start_index + 1, len(uidList)):
                 result, data = mail.uid('fetch', uidList[i], '(RFC822)')
                 raw_email = data[0][1]
                 email_message = email.message_from_bytes(raw_email)

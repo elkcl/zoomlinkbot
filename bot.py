@@ -6,7 +6,6 @@ import time
 from datetime import datetime
 import pytz # external
 import json
-import base64
 import re
 import tldextract # external
 
@@ -16,9 +15,11 @@ def get_text(email_message_instance):
     if maintype == 'multipart':
         for part in email_message_instance.get_payload():
             if part.get_content_maintype() == 'text':
-                res += part.get_payload()
+                chset = part.get_content_charset()
+                res += part.get_payload(decode=True).decode(chset)
     elif maintype == 'text':
-        res+= email_message_instance.get_payload()
+        chset = email_message_instance.get_content_charset()
+        res+= email_message_instance.get_payload(decode=True).decode(chset)
     return res
 
 with open("credentials.json", "r") as read_file:
@@ -54,7 +55,7 @@ while True:
                 raw_email = data[0][1]
                 email_message = email.message_from_bytes(raw_email)
                 from_addr = email.utils.parseaddr(email_message['From'])[1]
-                contents = base64.b64decode(get_text(email_message)).decode('utf-8')
+                contents = get_text(email_message)
                 urls = re.findall(r'(https?://[^\s]+)', contents)
                 zoom_link = ""
                 found = False

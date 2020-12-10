@@ -9,6 +9,24 @@ import json
 import re
 import tldextract # external
 
+def get_lesson_num(t):
+    if t <= 9*60 + 15:
+        return 0
+    elif t <= 10*60 + 10:
+        return 1
+    elif t <= 11*60 + 15:
+        return 2
+    elif t <= 12*60 + 20:
+        return 3
+    elif t <= 13*60 + 15:
+        return 4
+    elif t <= 14*60 + 20:
+        return 5
+    elif t <= 15*60 + 25:
+        return 6
+    else:
+        return -1
+
 def get_text(email_message_instance):
     res = ""
     maintype = email_message_instance.get_content_maintype()
@@ -29,19 +47,51 @@ mail.login(credentials["login"], credentials["password"])
 mail.select('INBOX')
 
 gc = pygsheets.authorize(service_file='serviceacc.json')
-sh = gc.open_by_key(credentials["sheet_id"])
-wk = sh[0]
+wk = gc.open_by_key(credentials["sheet_id"])[0]
+tt = gc.open_by_key(credentials["timetable_id"])[0]
 
 tz = pytz.timezone('Europe/Moscow')
+allCells = wk.range(wk.cell(1, 1).label + ':' + wk.cell(wk.rows, wk.cols))
 
 result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
+now = datetime.now(tz)
+currLessonNum = get_lesson_num(now.minute)
+if currLessonNum == -1:
+    lesson = "null"
+else:        
+    lesson = tt.cell(currLessonNum+1, now.weekday()+1).value
+for c in allCells:
+    c.color = (1.0, 1.0, 1.0, 1.0)
+if lesson != "null":
+    for row, uid in enumerate(wk.get_col(5)):
+        if uid == lesson:
+            r = wk.range(wk.cell(row+1, 1).label + ':' + wk.cell(row+1, wk.cols))
+            for c in r:
+                c.color = (0.57, 0.79, 0.47, 1.0)
+lastLessonNum = currLessonNum
 print('Ready!')
 print('Waiting...')
 time.sleep(60)
 
 while True:
     print('Checking...')
+    now = datetime.now(tz)
+    currLessonNum = get_lesson_num(now.minute)
+    if currLessonNum != lastLessonNum:
+        if currLessonNum == -1:
+            lesson = "null"
+        else:        
+            lesson = tt.cell(currLessonNum+1, now.weekday()+1).value
+        for c in allCells:
+            c.color = (1.0, 1.0, 1.0, 1.0)
+        if lesson != "null":
+            for row, uid in enumerate(wk.get_col(5)):
+                if uid == lesson:
+                    r = wk.range(wk.cell(row+1, 1).label + ':' + wk.cell(row+1, wk.cols))
+                    for c in r:
+                        c.color = (0.57, 0.79, 0.47, 1.0)
+        lastLessonNum = currLessonNum
     try:
         result, data = mail.uid('search', None, "ALL")
         uidList = data[0].split()

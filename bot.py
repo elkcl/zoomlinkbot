@@ -80,6 +80,7 @@ while True:
     now = datetime.now(tz)
     currLessonNum = get_lesson_num(now.hour*60 + now.minute)
     if currLessonNum != lastLessonNum:
+        print("Lesson change!")
         if currLessonNum == -1:
             lesson = "null"
         else:        

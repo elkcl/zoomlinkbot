@@ -10,19 +10,19 @@ import re
 import tldextract # external
 
 def get_lesson_num(t):
-    if t <= 9*60 + 15:
+    if t < 9*60 + 15:
         return 0
-    elif t <= 10*60 + 10:
+    elif t < 10*60 + 10:
         return 1
-    elif t <= 11*60 + 15:
+    elif t < 11*60 + 15:
         return 2
-    elif t <= 12*60 + 20:
+    elif t < 12*60 + 20:
         return 3
-    elif t <= 13*60 + 15:
+    elif t < 13*60 + 15:
         return 4
-    elif t <= 14*60 + 20:
+    elif t < 14*60 + 20:
         return 5
-    elif t <= 15*60 + 25:
+    elif t < 15*60 + 25:
         return 6
     else:
         return -1

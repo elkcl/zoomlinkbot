@@ -56,7 +56,7 @@ allCells = wk.range(wk.cell((1, 1)).label + ':' + wk.cell((wk.rows, wk.cols)).la
 result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
 now = datetime.now(tz)
-currLessonNum = get_lesson_num(now.minute)
+currLessonNum = get_lesson_num(now.hour*60 + now.minute)
 if currLessonNum == -1:
     lesson = "null"
 else:        
@@ -78,7 +78,7 @@ time.sleep(60)
 while True:
     print('Checking...')
     now = datetime.now(tz)
-    currLessonNum = get_lesson_num(now.minute)
+    currLessonNum = get_lesson_num(now.hour*60 + now.minute)
     if currLessonNum != lastLessonNum:
         if currLessonNum == -1:
             lesson = "null"

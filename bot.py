@@ -61,12 +61,13 @@ if currLessonNum == -1:
     lesson = "null"
 else:        
     lesson = tt.cell((currLessonNum+1, now.weekday()+1)).value
-for c in allCells:
-    c.color = (1.0, 1.0, 1.0, 1.0)
+for r in allCells:
+    for c in r:
+        c.color = (1.0, 1.0, 1.0, 1.0)
 if lesson != "null":
     for row, uid in enumerate(wk.get_col(5)):
         if uid == lesson:
-            r = wk.range(wk.cell((row+1, 1)).label + ':' + wk.cell((row+1, wk.cols)).label)
+            r = wk.range(wk.cell((row+1, 1)).label + ':' + wk.cell((row+1, wk.cols)).label)[0]
             for c in r:
                 c.color = (0.57, 0.79, 0.47, 1.0)
 lastLessonNum = currLessonNum
@@ -83,12 +84,13 @@ while True:
             lesson = "null"
         else:        
             lesson = tt.cell((currLessonNum+1, now.weekday()+1)).value
-        for c in allCells:
-            c.color = (1.0, 1.0, 1.0, 1.0)
+        for r in allCells:
+            for c in r:
+                c.color = (1.0, 1.0, 1.0, 1.0)
         if lesson != "null":
             for row, uid in enumerate(wk.get_col(5)):
                 if uid == lesson:
-                    r = wk.range(wk.cell((row+1, 1)).label + ':' + wk.cell((row+1, wk.cols)).label)
+                    r = wk.range(wk.cell((row+1, 1)).label + ':' + wk.cell((row+1, wk.cols)).label)[0]
                     for c in r:
                         c.color = (0.57, 0.79, 0.47, 1.0)
         lastLessonNum = currLessonNum

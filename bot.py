@@ -51,7 +51,7 @@ wk = gc.open_by_key(credentials["sheet_id"])[0]
 tt = gc.open_by_key(credentials["timetable_id"])[0]
 
 tz = pytz.timezone('Europe/Moscow')
-allCells = wk.range(wk.cell((1, 1)).label + ':' + wk.cell((wk.rows, wk.cols)).label)
+
 
 result, data = mail.uid('search', None, "ALL")
 last_uid = data[0].split()[-1]
@@ -61,6 +61,7 @@ if currLessonNum == -1:
     lesson = "null"
 else:        
     lesson = tt.cell((currLessonNum+1, now.weekday()+1)).value
+allCells = wk.range(wk.cell((1, 1)).label + ':' + wk.cell((wk.rows, wk.cols)).label)
 for r in allCells:
     for c in r:
         c.color = (1.0, 1.0, 1.0, 1.0)
@@ -85,6 +86,7 @@ while True:
             lesson = "null"
         else:        
             lesson = tt.cell((currLessonNum+1, now.weekday()+1)).value
+        allCells = wk.range(wk.cell((1, 1)).label + ':' + wk.cell((wk.rows, wk.cols)).label)
         for r in allCells:
             for c in r:
                 c.color = (1.0, 1.0, 1.0, 1.0)

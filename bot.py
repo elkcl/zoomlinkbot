@@ -53,11 +53,14 @@ tt = gc.open_by_key(credentials["timetable_id"])[0]
 tz = pytz.timezone('Europe/Moscow')
 
 last_uid = tt.get_value('H1')
+print(last_uid)
 if last_uid == "null":
     result, data = mail.uid('search', None, "ALL")
     last_uid = data[0].split()[-1]
+    tt.update_value('H1', last_uid)
 else:
-    last_uid = int(last_uid)
+    last_uid = last_uid.encode("utf-8")
+print(last_uid)
 now = datetime.now(tz)
 currLessonNum = get_lesson_num(now.hour*60 + now.minute)
 if currLessonNum == -1:
@@ -81,6 +84,7 @@ time.sleep(60)
 
 while True:
     print('Checking...')
+    print(last_uid)
     now = datetime.now(tz)
     currLessonNum = get_lesson_num(now.hour*60 + now.minute)
     if currLessonNum != lastLessonNum:
@@ -133,7 +137,7 @@ while True:
                             wk.cell((row+1, 2)).set_value(zoom_link)
                             wk.cell((row+1, 3)).set_value(datetime.now(tz).strftime("%H:%M %b-%d"))
             last_uid = curr_uid
-            tt.update_value('H1', last_uid)
+            tt.update_value('H1', last_uid.decode("utf-8"))
     except imaplib.IMAP4.abort:
         mail = imaplib.IMAP4_SSL("imap.mail.ru")
         mail.login(credentials["login"], credentials["password"])

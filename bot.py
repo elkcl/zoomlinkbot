@@ -57,7 +57,7 @@ print(last_uid)
 if last_uid == "null":
     result, data = mail.uid('search', None, "ALL")
     last_uid = data[0].split()[-1]
-    tt.update_value('H1', last_uid)
+    tt.update_value('H1', last_uid.decode("utf-8"))
 else:
     last_uid = last_uid.encode("utf-8")
 print(last_uid)
